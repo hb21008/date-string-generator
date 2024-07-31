@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,6 +42,29 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
+        /* .container のスタイルのすぐ後に追加 */
+        .link-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .link-container a {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: var(--primary-color);
+            text-decoration: none;
+            border: 2px solid var(--primary-color);
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .link-container a:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+
         .form-group {
             margin-bottom: 20px;
         }
@@ -51,7 +75,9 @@
             font-weight: bold;
         }
 
-        select, button, textarea {
+        select,
+        button,
+        textarea {
             width: 100%;
             padding: 10px;
             font-size: 16px;
@@ -71,7 +97,9 @@
             padding-right: 30px;
         }
 
-        select:focus, button:focus, textarea:focus {
+        select:focus,
+        button:focus,
+        textarea:focus {
             outline: none;
             border-color: var(--primary-color);
             box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
@@ -160,22 +188,36 @@
             border-radius: 50%;
         }
 
-        input:checked + .slider {
+        input:checked+.slider {
             background-color: var(--primary-color);
         }
 
-        input:checked + .slider:before {
+        input:checked+.slider:before {
             transform: translateX(26px);
         }
 
         @keyframes fadein {
-            from {bottom: 0; opacity: 0;}
-            to {bottom: 30px; opacity: 1;}
+            from {
+                bottom: 0;
+                opacity: 0;
+            }
+
+            to {
+                bottom: 30px;
+                opacity: 1;
+            }
         }
 
         @keyframes fadeout {
-            from {bottom: 30px; opacity: 1;}
-            to {bottom: 0; opacity: 0;}
+            from {
+                bottom: 30px;
+                opacity: 1;
+            }
+
+            to {
+                bottom: 0;
+                opacity: 0;
+            }
         }
 
         /* Desktop styles */
@@ -183,6 +225,7 @@
             body {
                 padding: 40px;
             }
+
             .container {
                 padding: 40px;
             }
@@ -193,20 +236,31 @@
             body {
                 padding: 10px;
             }
+
             .container {
                 padding: 20px;
             }
+
             h1 {
                 font-size: 24px;
             }
-            select, button, textarea {
+
+            select,
+            button,
+            textarea {
                 font-size: 14px;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="container">
+        <!-- この行を <div class="container"> のすぐ内側に追加 -->
+        <div class="link-container">
+            <a href="https://chouseisan.com" target="_blank">調整さんへ移動</a>
+        </div>
+
         <h1>日付文字列生成ツール</h1>
         <div class="toggle-container">
             <label class="toggle-switch">
@@ -305,4 +359,5 @@
         darkModeToggle.addEventListener('change', toggleDarkMode);
     </script>
 </body>
+
 </html>
