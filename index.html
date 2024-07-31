@@ -196,6 +196,20 @@
             transform: translateX(26px);
         }
 
+        .form-group label {
+            margin-right: 10px;
+        }
+
+        #excludeDays {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        #excludeDays label {
+            margin-right: 10px;
+            margin-bottom: 5px;
+        }
+
         @keyframes fadein {
             from {
                 bottom: 0;
@@ -256,11 +270,6 @@
 
 <body>
     <div class="container">
-        <!-- この行を <div class="container"> のすぐ内側に追加 -->
-        <div class="link-container">
-            <a href="https://chouseisan.com" target="_blank">調整さんへ移動</a>
-        </div>
-
         <h1>日付文字列生成ツール</h1>
         <div class="toggle-container">
             <label class="toggle-switch">
@@ -276,9 +285,24 @@
             <label for="month">月:</label>
             <select id="month"></select>
         </div>
+        <div class="form-group">
+            <label>除外する曜日:</label>
+            <div id="excludeDays">
+                <label><input type="checkbox" value="日"> 日</label>
+                <label><input type="checkbox" value="月"> 月</label>
+                <label><input type="checkbox" value="火"> 火</label>
+                <label><input type="checkbox" value="水"> 水</label>
+                <label><input type="checkbox" value="木"> 木</label>
+                <label><input type="checkbox" value="金"> 金</label>
+                <label><input type="checkbox" value="土"> 土</label>
+            </div>
+        </div>
         <button id="generateBtn">生成</button>
         <textarea id="result" readonly aria-live="polite"></textarea>
         <button id="copyBtn">クリップボードにコピー</button>
+        <div class="link-container">
+            <a href="https://chouseisan.com" target="_blank">調整さんへ移動</a>
+        </div>
     </div>
     <div id="toast" role="alert" aria-live="assertive">日付文字列がクリップボードにコピーされました。</div>
 
@@ -352,6 +376,23 @@
 
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
+        }
+
+        function generateDateStrings() {
+            const year = yearSelect.value;
+            const month = monthSelect.value;
+            const daysInMonth = getDaysInMonth(year, month);
+            const dateStrings = [];
+            const excludeDays = Array.from(document.querySelectorAll('#excludeDays input:checked')).map(checkbox => checkbox.value);
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayOfWeek = getDayOfWeek(year, month, day);
+                if (!excludeDays.includes(dayOfWeek)) {
+                    dateStrings.push(`${month}/${day}(${dayOfWeek})`);
+                }
+            }
+
+            return dateStrings.join('\n');
         }
 
         generateBtn.addEventListener('click', generateAndDisplay);
