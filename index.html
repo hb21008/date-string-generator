@@ -22,10 +22,10 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            max-width: 600px;
+            max-width: 100%;
             margin: 0 auto;
             padding: 20px;
-            background-color: var(--background-color);
+            /* background-color: var(--background-color); */
             color: var(--text-color);
             transition: background-color 0.3s, color 0.3s;
         }
@@ -36,7 +36,9 @@
         }
 
         .container {
-            background-color: var(--input-background);
+            max-width: 600px;
+            margin: 0 auto;
+            /* background-color: var(--input-background); */
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -238,9 +240,12 @@
         @media (min-width: 601px) {
             body {
                 padding: 40px;
+                background-color: var(--background-color);
+                /* 背景色を変数に設定 */
             }
 
             .container {
+                background-color: var(--input-background);
                 padding: 40px;
             }
         }
@@ -249,10 +254,14 @@
         @media (max-width: 600px) {
             body {
                 padding: 10px;
+                background-color: var(--input-background);
+                /* 背景色を入力背景色と同じに */
             }
 
             .container {
                 padding: 20px;
+                box-shadow: none;
+                /* モバイルでは影を削除 */
             }
 
             h1 {
@@ -262,6 +271,9 @@
             select,
             button,
             textarea {
+                width: 100%;
+                box-sizing: border-box;
+                /* パディングとボーダーを幅に含める */
                 font-size: 14px;
             }
         }
@@ -357,21 +369,25 @@
             return dateStrings.join('\n');
         }
 
-        function showToast() {
-            const toast = document.getElementById('toast');
-            toast.className = 'show';
-            setTimeout(() => { toast.className = toast.className.replace('show', ''); }, 3000);
-        }
-
         function generateAndDisplay() {
             const dateStrings = generateDateStrings();
             resultTextarea.value = dateStrings;
         }
 
-        function copyToClipboard() {
-            resultTextarea.select();
-            document.execCommand('copy');
-            showToast();
+        async function copyToClipboard() {
+            try {
+                await navigator.clipboard.writeText(resultTextarea.value);
+                showToast();
+            } catch (err) {
+                console.error('クリップボードへのコピーに失敗しました:', err);
+                alert('クリップボードへのコピーに失敗しました。');
+            }
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.className = 'show';
+            setTimeout(() => { toast.className = toast.className.replace('show', ''); }, 3000);
         }
 
         function toggleDarkMode() {
